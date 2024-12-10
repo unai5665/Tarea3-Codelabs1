@@ -2,6 +2,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,26 +25,26 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 
 @Composable
-fun App() {
+fun MainApp() {
     MaterialTheme {
-        var mostrarInicio = remember { mutableStateOf(true) }
-        if (mostrarInicio.value) {
-            Inicio(mostrarInicio)
+        var showStartScreen = remember { mutableStateOf(true) }
+        if (showStartScreen.value) {
+            StartScreen(showStartScreen)
         } else {
-            Pantalla2()
+            SecondScreen()
         }
     }
 }
 
 @Composable
-fun Inicio(mostrarInicio: MutableState<Boolean>) {
+fun StartScreen(showStartScreen: MutableState<Boolean>) {
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         Text(
             text = "Welcome to the Basics Codelabs!",
             style = TextStyle(fontSize = 24.sp, color = Color.Black)
         )
         Button(
-            onClick = { mostrarInicio.value = false },
+            onClick = { showStartScreen.value = false },
             colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF6200EE)) // Color más vibrante para el botón
         ) {
             Text(text = "Continue", color = Color.White)
@@ -52,21 +53,21 @@ fun Inicio(mostrarInicio: MutableState<Boolean>) {
 }
 
 @Composable
-fun Pantalla2(modifier: Modifier = Modifier) {
+fun SecondScreen(modifier: Modifier = Modifier) {
     val names: List<String> = List(1000) { "$it" }
     LazyColumn(
         modifier = Modifier.fillMaxSize().padding(16.dp)
     ) {
         items(names) { name ->
             Row(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
-                Fila(name, modifier = Modifier)
+                ListItem(name, modifier = Modifier)
             }
         }
     }
 }
 
 @Composable
-fun Fila(texto: String, modifier: Modifier = Modifier) {
+fun ListItem(texto: String, modifier: Modifier = Modifier) {
     var expand = rememberSaveable { mutableStateOf(false) }
     val expandPadding by animateDpAsState(
         targetValue = if (expand.value) 70.dp else 0.dp,
@@ -94,7 +95,6 @@ fun Fila(texto: String, modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-
             Text(
                 text = texto,
                 style = TextStyle(fontSize = 25.sp, color = Color.Black, fontWeight = FontWeight.Bold),
@@ -124,6 +124,6 @@ fun Fila(texto: String, modifier: Modifier = Modifier) {
 
 fun main() = application {
     Window(onCloseRequest = ::exitApplication) {
-        App()
+        MainApp()
     }
 }
