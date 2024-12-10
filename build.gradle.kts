@@ -29,7 +29,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "Tarea3-Codelabs1"
+            packageName = "Tarea3Codelab"
             packageVersion = "1.0.0"
         }
     }
